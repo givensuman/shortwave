@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app'
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { Center, ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 const queryClient = new QueryClient()
@@ -11,7 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
     useSystemColorMode: false
   })}>
   <QueryClientProvider client={queryClient}>
-    <Component {...pageProps} />
+    <Center>
+      <Component {...pageProps} />
+    </Center>
   </QueryClientProvider>
   </ChakraProvider>
   </>
