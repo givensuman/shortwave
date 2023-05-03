@@ -23,8 +23,6 @@ const Station = ({
         <Card 
             direction="row"
             alignItems="center"
-            my={4}
-            mx={4}
             height={50}
             minH="fit-content"
             {...props}

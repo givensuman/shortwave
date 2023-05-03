@@ -13,7 +13,7 @@ export default async function handler(
   res.status(200).send(data)
 }
 
-export const getTrending = () => {
+export const getPopular = () => {
   return useQuery<Station[]>("get popular", async () => await fetch("/api/getPopular", {
       method: "GET"
     }

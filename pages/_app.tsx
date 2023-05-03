@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
     useSystemColorMode: false
   })}>
   <QueryClientProvider client={queryClient}>
-    <Center>
+    <Center maxWidth="6xl" mx="auto">
       <Component {...pageProps} />
     </Center>
   </QueryClientProvider>

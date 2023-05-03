@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Box, Button, Center, Icon, Heading, Stack, IconButton, useColorModeValue, HStack } from '@chakra-ui/react'
-import type { BoxProps, BackgroundProps } from '@chakra-ui/react'
+import type { StackProps, BackgroundProps } from '@chakra-ui/react'
 import { Plus, Browser, CaretLeft, CaretRight } from 'phosphor-react'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -9,7 +9,7 @@ const motionConfig = {
     animate: { x: 0 }
 }
 
-const Carousel: React.FC<BoxProps> = (props) => {
+const Carousel: React.FC<StackProps> = (props) => {
 
     const maxIndex = 2
     const [ currentIndex, setCurrentIndex ] = useState(0) 
@@ -94,11 +94,23 @@ const Carousel: React.FC<BoxProps> = (props) => {
     ] as const)[currentIndex]
 
     return (
-        <Box 
+        <Stack 
+            spacing={4}
+            my={8}
+            alignItems="center"
             {...props}
-            position="relative"
         >
-            <IconButton
+            <Center
+                bgColor={bgColor}
+                height={200}
+                borderRadius={10}
+                w="full"
+                maxW="90vw"
+                transitionDuration="200ms"
+                transitionProperty="background-color"
+                position="relative"
+            >
+                            <IconButton
                 icon={<CaretLeft weight="bold" fontSize="1.5em" />}
                 onClick={decrementIndex}
                 aria-label="Previous"
@@ -126,15 +138,6 @@ const Carousel: React.FC<BoxProps> = (props) => {
                 top={75}
                 right={2.5}
             />
-            <Center
-                bgColor={bgColor}
-                height={200}
-                borderRadius={10}
-                w="4xl"
-                maxW="90vw"
-                transitionDuration="200ms"
-                transitionProperty="background-color"
-            >
                 <AnimatePresence>
                     {innerHtml}
                 </AnimatePresence>
@@ -154,7 +157,7 @@ const Carousel: React.FC<BoxProps> = (props) => {
                     ))}
                 </HStack>
             </Center>
-        </Box>
+        </Stack>
     )
 }
 
