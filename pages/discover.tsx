@@ -22,7 +22,7 @@ export default function Discover() {
                 <StationList />
             </SearchProvider> */}
             <Carousel />
-            <Stack spacing={8}>
+            <Stack spacing={16} pb={48}>
                 <StationBlock
                     heading="Popular Stations"
                     query={popularQuery}

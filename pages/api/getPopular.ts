@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { useQuery } from 'react-query'
+import { useQuery, UseQueryOptions } from 'react-query'
 
 import type { Station } from 'radio-browser-api'
 
@@ -13,9 +13,9 @@ export default async function handler(
   res.status(200).send(data)
 }
 
-export const getPopular = () => {
+export const getPopular = (options?: UseQueryOptions<Station[]>) => {
   return useQuery<Station[]>("get popular", async () => await fetch("/api/getPopular", {
       method: "GET"
     }
-  ).then(res => res.json()))
+  ).then(res => res.json()), options)
 }

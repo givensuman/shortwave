@@ -16,7 +16,7 @@ const StationBlock = ({ heading, query, ...props }: Props) => {
 
     return (
         <Stack px={3} {...props}>
-            <Heading fontSize="xl">
+            <Heading fontSize="xl" mb={2}>
                 {heading}
             </Heading>
             <SimpleGrid columns={2} spacing={4}>
