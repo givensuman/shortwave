@@ -110,7 +110,7 @@ const Carousel: React.FC<StackProps> = (props) => {
                 transitionProperty="background-color"
                 position="relative"
             >
-                            <IconButton
+            <IconButton
                 icon={<CaretLeft weight="bold" fontSize="1.5em" />}
                 onClick={decrementIndex}
                 aria-label="Previous"
@@ -146,6 +146,7 @@ const Carousel: React.FC<StackProps> = (props) => {
                 <HStack spacing={2}>
                     {[...Array(maxIndex + 1)].map((_, index) => (
                         <Box 
+                            key={index}
                             height={1}
                             width={10}
                             borderRadius="lg"

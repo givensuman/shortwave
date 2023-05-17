@@ -1,12 +1,7 @@
-import Search from "@/components/Search"
-import StationList from "@/components/StationList"
-import { SearchProvider } from "@/hooks/useSearch"
-import { Box, Center, Heading, HStack, SimpleGrid, Stack } from "@chakra-ui/react"
+import { Box, Stack, useColorMode } from "@chakra-ui/react"
 
 import Carousel from "@/components/Carousel"
 import api from "@/utils/api"
-import { useEffect } from "react"
-import Station from "@/components/Station"
 import StationBlock from "@/components/StationBlock"
 
 export default function Discover() {
@@ -15,12 +10,11 @@ export default function Discover() {
     const trendingQuery = api.getTrending()
     const activeQuery = api.getActive()
 
+    const { toggleColorMode } = useColorMode()
+
     return (
-        <Box> 
-            {/* <SearchProvider>
-                <Search />
-                <StationList />
-            </SearchProvider> */}
+        <Box>
+            <button onClick={toggleColorMode}>toggle</button>
             <Carousel />
             <Stack spacing={16} pb={48}>
                 <StationBlock

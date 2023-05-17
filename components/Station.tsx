@@ -1,12 +1,12 @@
-import { Card, CardBody, Divider, Heading, IconButton, Image, List, ListItem, Stack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react"
+import { Card, CardBody, Divider, Heading, IconButton, Image, List, ListItem, Stack, Text, useDisclosure, useColorModeValue } from "@chakra-ui/react"
 import type { CardProps } from "@chakra-ui/react"
 import { FaPlay } from "react-icons/fa"
 import type { Station } from "radio-browser-api"
 
-import useCountryCode from "@/hooks/useCountryCode"
-
 import notfound from "@/assets/notfound.png"
 import Link from '@/components/Link'
+import Modal from '@/components/Modal'
+import displayTags from "@/utils/capitalizeStrings"
 
 interface Props extends CardProps {
     station: Station
@@ -17,10 +17,9 @@ const Station = ({
     ...props
 }: Props) => {
 
-    const hasFavicon = station.favicon.length > 0
-    const flag = useCountryCode(station.countryCode)
+    const { onOpen, ...disclosureProps } = useDisclosure()
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const borderColor = useColorModeValue('gray.200', 'gray.700')
 
     return (
         <>
@@ -30,17 +29,22 @@ const Station = ({
                 height={50}
                 minH="fit-content"
                 border="1px"
-                borderColor="gray.100"
+                borderColor={borderColor}
+                overflow="hidden"
+                shadow="md"
                 rounded="md"
                 cursor="pointer"
-                onClick={onOpen}
+                onClick={() => {
+                    onOpen()
+                    console.log(station.name)
+                }}
                 {...props}
             >
                 <Image 
                     objectFit="cover"
-                    maxW={50}
+                    w={50}
                     h="100%"
-                    src={hasFavicon ? station.favicon : notfound.src}
+                    src={station.favicon}
                     alt={station.name}
                     fallbackSrc={notfound.src}
                 />
@@ -60,17 +64,18 @@ const Station = ({
                             fontWeight="normal"
                             noOfLines={1}
                         >
-                            {station.tags.map(tag => (
-                                tag.split(" ")
-                                    .map(subTag => (
-                                        subTag.slice(0, 1).toUpperCase() + subTag.slice(1, tag.length)
-                                    ))
-                                    .join(" ")
-                            )).join(", ")}
+                            {displayTags(station.tags)}
                         </Heading>
                     </CardBody>
                 </Stack>
-                <Link href={`/${station.id}`} ml="auto" >
+                <Link 
+                    href={`/${station.id}`} 
+                    ml="auto" 
+                    onClick={e => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                    }}
+                >
                     <IconButton 
                         aria-label={`Play ${station.name}`}
                         icon={<FaPlay />}
@@ -79,15 +84,10 @@ const Station = ({
                     />
                 </Link>
             </Card>
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        {station.name}
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
+            <Modal 
+                station={station}
+                {...disclosureProps}            
+            />
         </>
     )
 }

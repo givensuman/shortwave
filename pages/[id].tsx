@@ -13,7 +13,7 @@ export default function Id() {
     if (station) return (
         <div>
             {station.name}
-            <audio src={station.urlResolved} />
+            <audio src={station.urlResolved} controls />
         </div>
     )
 }
