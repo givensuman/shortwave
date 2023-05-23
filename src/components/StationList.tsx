@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react'
 
-import useSearch from '@/hooks/useSearch'
+import useSearch from '@/src/hooks/useSearch'
 import Station from './Station'
 
 const StationList = () => {

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react'
-import { Box, Button, Center, Icon, Heading, Stack, IconButton, useColorModeValue, HStack } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Box, Button, Center, Icon, Heading, Stack, IconButton, useColorModeValue, HStack, Link } from '@chakra-ui/react';
 import type { StackProps, BackgroundProps } from '@chakra-ui/react'
 import { Plus, Browser, CaretLeft, CaretRight } from 'phosphor-react'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -54,11 +54,12 @@ const Carousel: React.FC<StackProps> = (props) => {
                     colorScheme={colorScheme}
                     maxW="fit-content"
                     py={0}
+                    _hover={{
+                        bgColor: "yellow.400"
+                    }}
                 >
                     <Icon 
                         as={Plus}
-                        position="relative"
-                        bottom={0.5}
                         mr={2}
                         weight="bold"
                     />
@@ -74,16 +75,16 @@ const Carousel: React.FC<StackProps> = (props) => {
                 <Heading>
                     Powered by radio-browser.info
                 </Heading>
-                <Button 
+                <Button
+                    as={Link}
                     colorScheme={colorScheme}
                     maxW="fit-content"
                     py={0}
-                    onClick={() => window.open("https://www.radio-browser.info", '_blank')}
+                    href="https://www.radio-browser.info"
+                    isExternal
                 >
                     <Icon
                         as={Browser}
-                        position="relative"
-                        bottom={0.5}
                         mr={2}
                         weight="bold"
                     />
@@ -98,6 +99,7 @@ const Carousel: React.FC<StackProps> = (props) => {
             spacing={4}
             my={8}
             alignItems="center"
+            w="full"
             {...props}
         >
             <Center

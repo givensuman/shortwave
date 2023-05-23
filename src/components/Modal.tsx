@@ -1,25 +1,9 @@
 import React, { useMemo } from 'react'
-import { Box, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, ModalProps, UseDisclosureProps, Image, Stack, Heading, Link, HStack, Button, TableBodyProps,   
-    Table as Table_,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-    TableContainerProps,
-    TableRowProps,
-    Text,
-    Divider,
-    useColorModeValue,
-    Icon, } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, UseDisclosureProps, Image, Stack, Heading, Link, HStack, Button, Table as Table_, Tbody, Tr, Td, TableContainer, TableContainerProps, TableRowProps, Text, Divider, useColorModeValue, Icon } from '@chakra-ui/react'
 import type { Station } from "radio-browser-api"
 import { Browsers } from 'phosphor-react'
 
-import notfound from '@/assets/notfound.png';
-import capitalizeStrings from '@/utils/capitalizeStrings';
+import capitalizeStrings from '../utils/capitalizeStrings';
 
 interface Props extends UseDisclosureProps {
     station: Station,
@@ -49,7 +33,7 @@ const Modal_ = ({
             {...props}
         >
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent py={4}>
                 <ModalCloseButton />
                 <ModalBody>
                     <Stack 
@@ -59,7 +43,7 @@ const Modal_ = ({
                         <Image 
                             src={station.favicon}
                             alt={station.name}
-                            fallbackSrc={notfound.src}
+                            fallbackSrc={'/notfound.png'}
                             h={150}
                             rounded="md"
                         />
@@ -90,14 +74,16 @@ const Modal_ = ({
                                 label="Language"
                                 data={capitalizeStrings(station.language)}
                             />
-                            <Cell
-                                label="Tags"
-                                data={
-                                    <Text noOfLines={1} maxW={250}>
-                                        {capitalizeStrings(station.tags)}
-                                    </Text>
-                                }
-                            />
+                            {station.tags.length > 0 && 
+                                <Cell
+                                    label="Tags"
+                                    data={
+                                        <Text noOfLines={1} maxW={250}>
+                                            {capitalizeStrings(station.tags)}
+                                        </Text>
+                                    }
+                                />
+                            }
                             <Cell
                                 label="Votes"
                                 data={station.votes}
@@ -131,7 +117,9 @@ const Modal_ = ({
                             <Cell
                                 label="Stream"
                                 data={
-                                    <Button onClick={() => window.open(station.urlResolved, '_blank')}
+                                    <Button 
+                                        as={Link}
+                                        href={station.urlResolved}
                                     >
                                         <Icon 
                                             as={Browsers}
