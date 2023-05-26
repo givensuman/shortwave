@@ -2,7 +2,6 @@
   "name": "shortwave",
   "version": "0.1.0",
   "private": true,
-  
   "license": "GPL-3.0",
   "scripts": {
     "dev": "vite",
@@ -19,11 +18,13 @@
     "radio-browser-api": "^6.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-query": "^3.39.3"
+    "react-query": "^3.39.3",
+    "wavesurfer.js": "^6.6.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/wavesurfer.js": "^6.0.6",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react": "^4.0.0",
