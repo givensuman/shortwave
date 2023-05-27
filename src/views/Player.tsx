@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { HStack, Card, Heading, Image, IconButton, Box, Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverCloseButton, PopoverBody } from '@chakra-ui/react';
+import { HStack, Card, Heading, Image, IconButton, Box, Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverCloseButton, PopoverBody, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
 
 import usePlayer from '../hooks/usePlayer'
-import { Pause, Play, ArrowClockwise, SpeakerSimpleHigh, SpeakerSimpleNone, SpeakerSimpleLow } from 'phosphor-react';
+import { Pause, Play, SpeakerSimpleHigh, SpeakerSimpleNone, SpeakerSimpleLow } from 'phosphor-react';
 
 const Player = () => {
 
@@ -24,17 +24,25 @@ const Player = () => {
     const iconProps = { weight: "fill", size: 25 } as const
 
     const [ SpeakerIcon, setSpeakerIcon ] = useState(<SpeakerSimpleHigh {...iconProps} />)
+
+    const [ volume, setVolume ] = useState(1)
+
     useEffect(() => {
-        if (audioRef.current) {
-            if (audioRef.current.volume === 0) {
-                setSpeakerIcon(<SpeakerSimpleNone {...iconProps} />)
-            } else if (audioRef.current.volume < 0.51) {
-                setSpeakerIcon(<SpeakerSimpleLow {...iconProps} />)
-            } else {
-                setSpeakerIcon(<SpeakerSimpleHigh {...iconProps} />)
-            }
+        if (volume === 0) {
+            setSpeakerIcon(<SpeakerSimpleNone {...iconProps} />)
+        } else if (volume < 0.51) {
+            setSpeakerIcon(<SpeakerSimpleLow {...iconProps} />)
+        } else {
+            setSpeakerIcon(<SpeakerSimpleHigh {...iconProps} />)
         }
-    }, [audioRef])
+    }, [volume])
+
+    const changeVolume = (val: number) => {
+        if (audioRef.current) {
+            audioRef.current.volume = val
+        }
+        setVolume(val)
+    }
 
     const [ isPaused, setIsPaused ] = useState(true)
 
@@ -98,11 +106,32 @@ const Player = () => {
                                 onClick={() => null}
                             />
                         </PopoverTrigger>
-                        <PopoverContent>
-                            <PopoverArrow />
-                            <PopoverCloseButton />
-                            <PopoverBody>
-                                Hello World
+                        <PopoverContent
+                            maxW={10}
+                            display="flex"
+                            alignItems="center"
+                            p={4}
+                        >
+                            <PopoverBody h={40}>
+                                <Slider
+                                    aria-label="Volume"
+                                    defaultValue={1}
+                                    min={0}
+                                    max={1}
+                                    step={0.01}
+                                    orientation="vertical"
+                                    onChange={changeVolume}
+                                >
+                                    <SliderTrack>
+                                        <SliderFilledTrack />
+                                    </SliderTrack>
+                                    <SliderThumb 
+                                        shadow="sm"
+                                        border="1px"
+                                        height={5}
+                                        width={5}
+                                    />
+                                </Slider>
                             </PopoverBody>
                         </PopoverContent>
                     </Popover>

@@ -17,7 +17,8 @@ const Station = ({
 }: Props) => {
 
     const {
-        currentStation: [_, setCurrentStation]
+        currentStation: [, setCurrentStation],
+        isPlaying: [, setIsPlaying]
     } = usePlayer()
 
     const { onOpen, ...disclosureProps } = useDisclosure()
