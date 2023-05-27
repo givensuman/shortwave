@@ -1,4 +1,4 @@
-import { Center, Stack, useColorMode } from "@chakra-ui/react"
+import { Center, Stack } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 
 import Carousel from "../components/Carousel"
@@ -11,25 +11,22 @@ export default function Discover() {
     const radio = useRadio()
 
     const popularQuery = useQuery(['get popular'], async () => {
-        return await radio.getStationsByVotes(20)
+        return await radio.getStationsByVotes(10)
     })
 
     const trendingQuery = useQuery(['get trending'], async () => {
-        return await radio.getStationsByClicks(20)
+        return await radio.getStationsByClicks(10)
     })
 
     const activeQuery = useQuery(['get active'], async () => {
-        return await radio.getStationsByRecentClicks(20)
+        return await radio.getStationsByRecentClicks(10)
     })
-
-    const { toggleColorMode } = useColorMode()
 
     return (
         <Center
             w="full"
             flexDirection="column"
         >
-            <button onClick={toggleColorMode}>toggle</button>
             <Carousel />
             <Stack spacing={16} pb={48}>
                 <StationBlock

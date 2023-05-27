@@ -7,6 +7,7 @@ const Wrapper: React.FC<CenterProps> = ({ children, ...props }) => {
             maxWidth="4xl"
             width="100vw"
             mx="auto"
+            flexDirection="column"
             {...props}
         >
             {children}
