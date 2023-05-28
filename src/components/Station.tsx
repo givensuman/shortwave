@@ -30,6 +30,7 @@ const Station = ({
             <Card 
                 direction="row"
                 alignItems="center"
+                py={8}
                 height={50}
                 minH="fit-content"
                 border="1px"
@@ -44,18 +45,18 @@ const Station = ({
                 }}
                 {...props}
             >
-                <Image 
-                    objectFit="cover"
-                    w={50}
-                    h="100%"
+                <Image
                     src={station.favicon}
-                    alt={station.name}
                     fallbackSrc="/notfound.png"
+                    alt={station.name}
+                    h={75}
+                    w={75}
+                    objectFit="cover"
                 />
                 <Divider orientation="vertical" />
                 <Stack>
                     <CardBody>
-                        <Heading 
+                        <Heading
                             size="sm"
                             mb={2}
                             noOfLines={1}

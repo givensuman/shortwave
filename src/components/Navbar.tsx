@@ -10,17 +10,17 @@ const Navbar = () => {
             width="full"
             display="flex"
             alignItems="center"
+            mt={6}
         >
             <HStack spacing={3}>
                 <Image
                     src="/logo.svg"
                     alt="Shortwave"
                     h={16}
-                />
-                <Heading
                     position="relative"
-                    top={2}
-                >
+                    bottom={2}
+                />
+                <Heading>
                     shortwave
                 </Heading>
             </HStack>

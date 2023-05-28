@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { HStack, Card, Heading, Image, IconButton, Box, Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverCloseButton, PopoverBody, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useColorModeValue } from '@chakra-ui/react';
+import { HStack, Card, Heading, Image, IconButton, Box, Popover, PopoverTrigger, PopoverContent, PopoverBody, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useColorModeValue, useDisclosure } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import usePlayer from '../hooks/usePlayer'
-import { Pause, Play, SpeakerSimpleHigh, SpeakerSimpleNone, SpeakerSimpleLow } from 'phosphor-react';
+import { Pause, Play, SpeakerSimpleHigh, SpeakerSimpleNone, SpeakerSimpleLow, SpeakerSimpleSlash } from 'phosphor-react';
 
 const Player = () => {
 
@@ -36,10 +36,13 @@ const Player = () => {
 
     useEffect(() => {
         if (volume === 0) {
+            setSpeakerIcon(<SpeakerSimpleSlash {...iconProps} />)
+        } else if (volume < 0.25) {
             setSpeakerIcon(<SpeakerSimpleNone {...iconProps} />)
-        } else if (volume < 0.51) {
+        } else if (volume < 0.75) {
             setSpeakerIcon(<SpeakerSimpleLow {...iconProps} />)
-        } else {
+        }
+        else {
             setSpeakerIcon(<SpeakerSimpleHigh {...iconProps} />)
         }
     }, [volume])
@@ -50,6 +53,23 @@ const Player = () => {
         }
         setVolume(val)
     }
+
+    const volumeRef = useRef(volume)
+
+    const toggleMute = () => {
+        if (audioRef.current) {
+            if (audioRef.current.volume === 0) {
+                audioRef.current.volume = volumeRef.current
+                setVolume(volumeRef.current)
+            } else {
+                audioRef.current.volume = 0
+                volumeRef.current = volume
+                setVolume(0)
+            }
+        } 
+    }
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const [ isPaused, setIsPaused ] = useState(true)
 
@@ -119,13 +139,17 @@ const Player = () => {
                             variant="ghost"
                             onClick={toggleAudio}
                         />
-                        <Popover>
+                        <Popover 
+                            isOpen={isOpen}
+                        >
                             <PopoverTrigger>
                                 <IconButton
                                     icon={SpeakerIcon}
                                     aria-label="Volume"
                                     variant="ghost"
-                                    onClick={() => null}
+                                    onClick={toggleMute}
+                                    onMouseEnter={onOpen}
+                                    onMouseLeave={onClose}
                                 />
                             </PopoverTrigger>
                             <PopoverContent
