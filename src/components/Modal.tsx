@@ -78,7 +78,7 @@ const Modal_ = ({
                                 <Cell
                                     label="Tags"
                                     data={
-                                        <Text noOfLines={1} maxW={250}>
+                                        <Text noOfLines={1} maxWidth={225}>
                                             {capitalizeStrings(station.tags)}
                                         </Text>
                                     }
@@ -148,12 +148,17 @@ const Table: React.FC<TableProps> = ({
     children,
     ...props 
 }) => {
+
+    const borderColor = useColorModeValue("gray.300", "gray.600")
+
     if (showIf) {
         return (
             <Stack
                 alignItems="flex-start"
                 overflow="hidden"
                 flexGrow={1}
+                width="full"
+                my={4}
             >
                 <Heading size="sm">
                     {heading}
@@ -161,19 +166,16 @@ const Table: React.FC<TableProps> = ({
                 <TableContainer 
                     shadow="md"
                     border="1px"
-                    borderColor="gray.200"
+                    borderColor={borderColor}
                     rounded="lg"
+                    width="full"
                 >
-                <Table_ 
-                    width={350}
-                    {...props}
-                >
+                <Table_ {...props}>
                     <Tbody>
                         {children}
                     </Tbody>
                 </Table_>
                 </TableContainer>
-                <Divider my={4} />
             </Stack> 
          )
     } else {
